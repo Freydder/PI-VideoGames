@@ -1,15 +1,15 @@
 const createGames = require("../controller/postGames");
 
 const handlerCreateGames = async (req, res) => {
-  const { name, description, plataformas, image, date, rating, genres } =
+  const { name, background_image, platforms, description, released, rating, genres } =
     req.body;
   try {
     if (
       !name ||
+      !background_image ||
+      !platforms ||
       !description ||
-      !plataformas ||
-      !image ||
-      !date ||
+      !released ||
       !rating ||
       !genres ||
       !genres.length
@@ -19,10 +19,10 @@ const handlerCreateGames = async (req, res) => {
 
     const newGame = await createGames(
       name,
+      background_image,
+      platforms,
       description,
-      plataformas,
-      image,
-      date,
+      released,
       rating,
       genres
     );

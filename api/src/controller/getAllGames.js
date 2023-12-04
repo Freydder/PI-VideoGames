@@ -35,11 +35,27 @@ const getAllGames = async () => {
       },
     });
 
-    const gamesFromAPI = response.data.results.map(({ id, name, genres }) => ({
-      id,
-      name,
-      genres,
-    }));
+    const gamesFromAPI = response.data.results.map(
+      ({
+        id,
+        name,
+        background_image,
+        platforms,
+        description,
+        released,
+        rating,
+        genres,
+      }) => ({
+        id,
+        name,
+        background_image,
+        platforms,
+        description,
+        released,
+        rating,
+        genres,
+      })
+    );
 
     const gamesFromDB = await Videogame.findAll();
 

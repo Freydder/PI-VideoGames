@@ -2,10 +2,10 @@ const { Videogame } = require("../db");
 
 const createGames = async (
   name,
+  background_image,
+  platforms,
   description,
-  plataformas,
-  image,
-  date,
+  released,
   rating,
   genres,
   createinDB
@@ -13,10 +13,10 @@ const createGames = async (
   const options = {
     where: { name },
     defaults: {
+      background_image,
+      platforms,
       description,
-      plataformas,
-      image,
-      date,
+      released,
       rating,
       genres,
       createinDB,
