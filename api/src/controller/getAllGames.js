@@ -54,6 +54,7 @@ const getAllGames = async () => {
         released,
         rating,
         genres,
+        createdinDB: false,
       })
     );
 
