@@ -1,0 +1,16 @@
+.div {
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    margin-bottom: 20px;
+    margin-top: -5px;
+    background-color: rgb(244, 239, 233);
+}
+
+.img {
+    filter: hue-rotate(100deg);
+    border-radius: 10px;
+    width: 7.5%;
+}

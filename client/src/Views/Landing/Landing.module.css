@@ -1,0 +1,16 @@
+.landing{
+    text-align: center;
+}
+
+button{
+    margin: 0 5px;
+    background: none;
+    background-color: rgba(10, 36, 36, 0.233);
+    font-weight: bold;
+    border-radius: 10px ;
+    cursor: pointer;
+}
+
+/* .img{
+    background-image: url(https://img.freepik.com/vector-gratis/consola-juegos-letras-letrero-neon-fondo-ladrillo_1262-11854.jpg?size=338&ext=jpg&ga=GA1.1.1803636316.1701216000&semt=sph);
+} */

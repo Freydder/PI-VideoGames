@@ -1,0 +1,10 @@
+.div {
+    background-color: rgb(158, 181, 181);
+    width: fit-content;
+    padding: 1em;
+    margin: 5px;
+    border: 2px solid black;
+    border-radius: 10px;
+    max-width: 15rem;
+}
+
