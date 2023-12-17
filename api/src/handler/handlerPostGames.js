@@ -1,21 +1,24 @@
 const createGames = require("../controller/postGames");
 
 const handlerCreateGames = async (req, res) => {
-  const { name, background_image, platforms, description, released, rating, genres } =
-    req.body;
+  // const { name, background_image, platforms, description, released, rating, genres } =
+  //   req.body;
   try {
-    if (
-      !name ||
-      !background_image ||
-      !platforms ||
-      !description ||
-      !released ||
-      !rating ||
-      !genres ||
-      !genres.length
-    ) {
-      return res.status(400).json({ status: "Se necesita información" });
-    }
+    // if (
+    //   !name ||
+    //   !background_image ||
+    //   !platforms ||
+    //   !description ||
+    //   !released ||
+    //   !rating ||
+    //   !genres ||
+    //   !genres.length
+    // ) {
+    //   return res.status(400).json({ status: "Se necesita información" });
+    // }
+
+    const { name, background_image, platforms, description, released, rating, genres } =
+    req.body;
 
     const newGame = await createGames(
       name,

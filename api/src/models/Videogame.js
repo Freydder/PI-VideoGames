@@ -29,13 +29,13 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       released: {
-        type: DataTypes.STRING,
+        type: DataTypes.DATE,
       },
       rating: {
-        type: DataTypes.STRING,
+        type: DataTypes.FLOAT,
       },
       genres: {
-        type: DataTypes.STRING,
+        type: DataTypes.ARRAY(DataTypes.STRING),
       },
       createdinDB: {
         type: DataTypes.BOOLEAN,

@@ -1,4 +1,4 @@
-const { Videogame } = require("../db");
+const { Videogame, Genres } = require("../db");
 
 const createGames = async (
   name,
@@ -10,22 +10,47 @@ const createGames = async (
   genres,
   createinDB
 ) => {
-  const options = {
-    where: { name },
-    defaults: {
+  try {
+    if (
+      !name ||
+      !background_image ||
+      !platforms ||
+      !description ||
+      !released ||
+      !rating ||
+      !genres
+    ) {
+      throw Error("Falta información del Videogame");
+    }
+
+    const newGame = await Videogame.create({
+      name,
       background_image,
       platforms,
       description,
       released,
       rating,
-      genres,
-      createinDB,
-    },
-  };
+      createdinDB: createinDB,
+    });
 
-  const [game, created] = await Videogame.findOrCreate(options);
+    // Buscar o crear géneros y asociarlos al videojuego
+    const associatedGenres = [];
 
-  return game;
+    for (const genreName of genres) {
+      const [genre, created] = await Genres.findOrCreate({
+        where: { name: genreName }
+      });
+      associatedGenres.push(genre);
+    }
+
+    await newGame.setGenres(associatedGenres);
+
+    return newGame;
+  } catch (error) {
+    console.error("Error al crear el videojuego:", error);
+    throw error;
+  }
 };
 
 module.exports = createGames;
+
