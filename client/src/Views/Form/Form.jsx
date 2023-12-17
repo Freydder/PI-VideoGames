@@ -32,14 +32,19 @@ const Form = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    let formattedValue = value;
+    if (name === "released") {
+      const [year, month, day] = value.split("-");
+      formattedValue = `${year}-${month}-${day}`;
+    }
+    setFormData({ ...formData, [name]: formattedValue });
     setErrors({ ...errors, [name]: "" });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      dispatch(createGame(formData));
+      await dispatch(createGame(formData));
     }
   };
 
@@ -65,7 +70,7 @@ const Form = () => {
   return (
     <div>
       <NavBar />
-      <div onSubmit={handleSubmit} className={style.div}>
+      <form onSubmit={handleSubmit} className={style.div}>
         <label>Name:</label>
         <br />
         <input
@@ -111,7 +116,7 @@ const Form = () => {
         <label>Fecha de Lanzamiento:</label>
         <br />
         <input
-          type="text"
+          type="date"
           name="released"
           value={formData.released}
           onChange={handleChange}
@@ -122,7 +127,7 @@ const Form = () => {
         <label>Rating:</label>
         <br />
         <input
-          type="text"
+          type="number"
           name="rating"
           value={formData.rating}
           onChange={handleChange}
@@ -141,7 +146,7 @@ const Form = () => {
         />
         <br />
         <button type="submit">Crear Juego</button>
-      </div>
+      </form>
     </div>
   );
 };
