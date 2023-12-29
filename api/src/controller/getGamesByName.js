@@ -27,6 +27,7 @@ const getGamesByName = async (name) => {
       name: game.name,
       released: game.released,
       background_image: game.background_image,
+      genres: game.genres.map((genre) => genre.name).join(", "),
     }));
 
     const games = [...gameDB, ...gamesFromApi];
