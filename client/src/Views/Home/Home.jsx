@@ -4,6 +4,7 @@ import { getByName, getGames, getGenres, changePage } from "../../redux/action";
 import NavBar from "../../Components/NavBar/NavBar";
 import Cards from "../../Components/Cards/Cards";
 import Pagination from "../../Components/Pagination/Pagination";
+import style from "./Home.module.css";
 
 function Home() {
   const games = useSelector((state) => state.games);
@@ -51,30 +52,19 @@ function Home() {
   };
 
   return (
-    <div>
+    <div className={style.div}>
       <NavBar handleSearch={handleSearch} genres={genres} />
       <Cards currentGames={currentGames} />
-      <Pagination
-        gamesPerPage={pagination.gamesPerPage}
-        totalGames={filteredGames.length}
-        currentPage={pagination.currentPage}
-        onPageChange={(pageNumber) => dispatch(changePage(pageNumber))}
-      />
+      <div>
+        <Pagination
+          gamesPerPage={pagination.gamesPerPage}
+          totalGames={filteredGames.length}
+          currentPage={pagination.currentPage}
+          onPageChange={(pageNumber) => dispatch(changePage(pageNumber))}
+        />
+      </div>
     </div>
   );
 }
 
 export default Home;
-
-// return (
-//   <div>
-//     <NavBar handleSearch={handleSearch} genres={genres} />
-//     <Cards games={games} filteredGames={filteredGames} />
-//     <Pagination
-//       gamesPerPage={pagination.gamesPerPage}
-//       totalGames={filteredGames.length}
-//       currentPage={pagination.currentPage}
-//       onPageChange={(pageNumber) => dispatch(changePage(pageNumber))}
-//     />
-//   </div>
-// );

@@ -16,7 +16,8 @@ const initialState = {
   detail: null,
   genres: [],
   filteredGames: [],
-  sortType: null,
+  alphabetSortOrder: "asc",
+  ratingSortOrder: "asc",
   pagination: {
     currentPage: 1,
     gamesPerPage: 15,
@@ -26,7 +27,7 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_NAME:
-      return { ...state, games: action.payload };
+      return { ...state, filteredGames: action.payload };
     case GET_GAMES:
       return {
         ...state,
@@ -52,9 +53,7 @@ const reducer = (state = initialState, action) => {
         };
       }
       const filteredGenre = state.games.filter((game) => {
-        const gameGenres = Array.isArray(game.genres)
-          ? game.genres.map((genre) => genre.name)
-          : [game.genres];
+        const gameGenres = (game.genres || "").split(", ");
         return gameGenres.includes(genreName);
       });
       return {
@@ -77,12 +76,12 @@ const reducer = (state = initialState, action) => {
         filteredGames: filteredGamesByOrigin,
       };
     case SORT_ALPHABET:
-      const sortOrder = action.payload;
+      const alphabetSortOrder = action.payload;
       const sortedAlphabet = [...state.filteredGames].sort((a, b) => {
-        if (sortOrder === "asc") {
+        if (alphabetSortOrder === "asc") {
           return a.name.localeCompare(b.name);
         }
-        if (sortOrder === "desc") {
+        if (alphabetSortOrder === "desc") {
           return b.name.localeCompare(a.name);
         }
         return 0;
@@ -90,16 +89,17 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         filteredGames: sortedAlphabet,
-        sortType: "alphabet",
+        alphabetSortOrder,
       };
     case SORT_BY_RATING:
-      const sortedByRating = [...state.filteredGames].sort(
-        (a, b) => b.rating - a.rating
+      const ratingSortOrder = action.payload;
+      const sortedByRating = [...state.filteredGames].sort((a, b) =>
+        ratingSortOrder === "desc" ? b.rating - a.rating : a.rating - b.rating
       );
       return {
         ...state,
         filteredGames: sortedByRating,
-        sortType: action.payload,
+        ratingSortOrder,
       };
     case CHANGE_PAGE:
       return {

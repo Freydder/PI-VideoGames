@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { createGame } from "../../redux/action";
 import NavBar from "../../Components/NavBar/NavBar";
@@ -9,9 +9,11 @@ import {
   validateReleased,
   validateRating,
 } from "./validation";
+import { useSelector } from "react-redux";
 
 const Form = () => {
   const dispatch = useDispatch();
+  const genres = useSelector((state) => state.genres);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -30,13 +32,27 @@ const Form = () => {
     rating: "",
   });
 
+  const [successMessage, setSuccessMessage] = useState("");
+  const [selectedGenres, setSelectedGenres] = useState([]);
+
+  useEffect(() => {
+    setFormData((prevData) => ({ ...prevData, genres: selectedGenres }));
+  }, [selectedGenres]);
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, options } = e.target;
     let formattedValue = value;
+
     if (name === "released") {
       const [year, month, day] = value.split("-");
       formattedValue = `${year}-${month}-${day}`;
+    } else if (name === "genres") {
+      setSelectedGenres(
+        Array.from(e.target.selectedOptions, (option) => option.value)
+      );
+      return; 
     }
+
     setFormData({ ...formData, [name]: formattedValue });
     setErrors({ ...errors, [name]: "" });
   };
@@ -45,6 +61,7 @@ const Form = () => {
     e.preventDefault();
     if (validateForm()) {
       await dispatch(createGame(formData));
+      setSuccessMessage("¡Nuevo videojuego creado exitosamente!");
     }
   };
 
@@ -137,15 +154,21 @@ const Form = () => {
         <br />
         <label>Genres:</label>
         <br />
-        <input
-          type="text"
+        <select
           name="genres"
-          value={formData.genres}
+          value={selectedGenres}
           onChange={handleChange}
           required
-        />
+        >
+          {genres.map((genre) => (
+            <option key={genre.id} value={genre.name}>
+              {genre.name}
+            </option>
+          ))}
+        </select>
         <br />
         <button type="submit">Crear Juego</button>
+        {successMessage && <p>{successMessage}</p>}
       </form>
     </div>
   );

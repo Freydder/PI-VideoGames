@@ -11,9 +11,10 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 function NavBar({ genres }) {
+  const imgURL = "https://previews.123rf.com/images/maiborodin/maiborodin2009/maiborodin200900474/155748800-icono-de-vector-de-consola-de-videojuegos-port%C3%A1til-elemento-simple-de-vector-plano.jpg"
   const dispatch = useDispatch();
-  const sortType = useSelector((state) => state.sortType);
-  const [sortOrder, setSortOrder] = useState(sortType || 'asc');
+  const alphabetSortOrder = useSelector((state) => state.alphabetSortOrder);
+  const ratingSortOrder = useSelector((state) => state.ratingSortOrder);
 
   const filterGenres = (e) => {
     const genreName = e.target.value;
@@ -25,21 +26,17 @@ function NavBar({ genres }) {
     dispatch(filterByOrigin(origin));
   };
 
-  // const handleSortAlphabet = () => {
-  //   dispatch(sortedAlphabet());
-  // };
-
   const handleSortAlphabet = (selectedOrder) => {
-    setSortOrder(selectedOrder);
     dispatch(sortedAlphabet(selectedOrder));
   };
 
-  const handleSortByRating = () => {
-    dispatch(sortByRating());
+  const handleSortByRating = (selectedOrder) => {
+    dispatch(sortByRating(selectedOrder));
   };
 
   return (
     <div className={style.div}>
+    <img className={style.img} src={imgURL} alt="" />
       <Link to="/home">
         <button>Home</button>
       </Link>
@@ -58,20 +55,28 @@ function NavBar({ genres }) {
             ))}
         </select>
         <select onChange={(e) => filterOrigin(e)}>
-          <option value="all">Seleccionar Opcion</option>
+          <option value="all">Seleccionar Origen</option>
           <option value="all">ALL</option>
           <option value="database">Base de Datos</option>
           <option value="api">API</option>
         </select>
         <select
-          value={sortOrder}
+          value={alphabetSortOrder}
           onChange={(e) => handleSortAlphabet(e.target.value)}
         >
-          <option>Seleccionar</option>
+          <option>Ordenamiento Alfabetico</option>
           <option value="asc">Ascendente</option>
           <option value="desc">Descendente</option>
         </select>
-        <button onClick={handleSortByRating}>Ordenar por Rating</button>
+        {/* <button onClick={handleSortByRating}>Ordenar por Rating</button> */}
+        <select
+          value={ratingSortOrder}
+          onChange={(e) => handleSortByRating(e.target.value)}
+        >
+          <option>Seleccionar Rating</option>
+          <option value="desc">Mayor</option>
+          <option value="asc">Menor</option>
+        </select>
       </div>
     </div>
   );

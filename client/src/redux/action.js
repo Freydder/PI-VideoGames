@@ -26,7 +26,7 @@ export const getByName = (name) => {
         dispatch(getGames());
       }
     } catch (error) {
-      console.error("Error en la solicitud:", error);
+      console.error("Error en la solicitud:", error.message);
     }
   };
 };
@@ -36,6 +36,7 @@ export const getGames = () => {
     try {
       const serverData = await axios.get("http://localhost:3001/videogames");
       const games = serverData.data;
+      // console.log(games);
       dispatch({
         type: GET_GAMES,
         payload: games,
@@ -54,7 +55,7 @@ export const filterByDetail = (id) => {
       );
       dispatch({ type: FILTER_BY_DETAIL, payload: data });
     } catch (error) {
-      throw new Error({ error: error.message });
+      console.error("Error al obtener detalles del videojuego:", error);
     }
   };
 };
@@ -106,10 +107,10 @@ export const sortedAlphabet = (order) => {
   };
 };
 
-export const sortByRating = () => {
+export const sortByRating = (sortOrder) => {
   return {
     type: SORT_BY_RATING,
-    payload: "rating",
+    payload: sortOrder,
   };
 };
 
@@ -131,7 +132,7 @@ export const createGame = (gameData) => {
         payload: newGame,
       });
     } catch (error) {
-      console.error("Error en la solicitud:", error);
+      console.error("Error al crear el juego:", error.message);
     }
   };
 };

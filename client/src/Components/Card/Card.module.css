@@ -1,8 +1,8 @@
 .div {
     /* flex-direction: center; */
-    background-color: darkslategrey;
+    background-color: rgb(164, 174, 174);
     width: fit-content;
-    padding: 1em;
+    padding: 0.4em;
     margin: 5px;
     border: 2px solid black;
     border-radius: 10px;

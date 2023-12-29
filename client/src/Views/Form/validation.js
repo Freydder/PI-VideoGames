@@ -13,9 +13,9 @@ export function validateDescription(description) {
 }
 
 export function validateReleased(released) {
-  const dateRegex = /^\d{4}-\d{2}-\d{2}$/; // Cambiado el regex para el nuevo formato
+  const dateRegex = /^\d{4}-\d{2}-\d{2}$/; 
   if (!dateRegex.test(released)) {
-    return "Ingrese la fecha de lanzamiento en el formato yyyy-MM-dd"; // Mensaje ajustado
+    return "Ingrese la fecha de lanzamiento en el formato yyyy-MM-dd"; 
   }
   return "";
 }
